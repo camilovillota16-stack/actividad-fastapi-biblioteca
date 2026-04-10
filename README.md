@@ -1,4 +1,4 @@
-Nombre completo: Camilo Villota
+Nombre completo: Harold Camilo Villota
 Código: 2240680
 Modalidad: Trabajo individual autorizado por el docente
 
