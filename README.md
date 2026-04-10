@@ -10,3 +10,6 @@ La API fue desarrollada con FastAPI y Pydantic, aplicando validaciones sobre los
 Además de los endpoints básicos del CRUD, se implementó el endpoint de préstamo y el endpoint adicional `LEYENDO`, que permite registrar los libros que una persona está leyendo actualmente.
 
 Este trabajo fue realizado de manera individual por autorización del docente.
+
+<img width="1498" height="720" alt="image" src="https://github.com/user-attachments/assets/68969b2c-f42a-4b14-9a5b-7a3b0089b5c5" />
+
