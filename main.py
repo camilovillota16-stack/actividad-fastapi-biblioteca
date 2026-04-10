@@ -8,9 +8,7 @@ app = FastAPI(title="API Biblioteca UAO")
 ANIO_ACTUAL = datetime.now().year
 
 
-# =========================
 # MODELOS
-# =========================
 
 class LibroBase(BaseModel):
     titulo: str = Field(..., min_length=1, description="Título del libro")
@@ -70,17 +68,13 @@ class LeyendoRespuesta(BaseModel):
     libros: List[Libro]
 
 
-# =========================
-# "BASE DE DATOS" EN MEMORIA
-# =========================
+# MEMORIA
 
 libros: List[Libro] = []
 leyendo_registros: List[LeyendoRespuesta] = []
 
 
-# =========================
 # FUNCIONES AUXILIARES
-# =========================
 
 def buscar_libro_por_id(libro_id: int) -> Libro:
     for libro in libros:
@@ -89,16 +83,14 @@ def buscar_libro_por_id(libro_id: int) -> Libro:
     raise HTTPException(status_code=404, detail="Libro no encontrado")
 
 
-# =========================
 # ENDPOINTS
-# =========================
 
 @app.get("/")
 def inicio():
     return {"mensaje": "API Biblioteca UAO funcionando"}
 
 
-# 1) POST /libros
+# POST /libros
 @app.post("/libros", response_model=Libro, status_code=201)
 def crear_libro(libro: LibroCrear):
     nuevo_id = len(libros) + 1
@@ -117,19 +109,19 @@ def crear_libro(libro: LibroCrear):
     return nuevo_libro
 
 
-# 2) GET /libros
+# GET /libros
 @app.get("/libros", response_model=List[Libro])
 def listar_libros():
     return libros
 
 
-# 3) GET /libros/{id}
+# GET /libros/{id}
 @app.get("/libros/{id}", response_model=Libro)
 def obtener_libro(id: int):
     return buscar_libro_por_id(id)
 
 
-# 4) PUT /libros/{id}
+# PUT /libros/{id}
 @app.put("/libros/{id}", response_model=Libro)
 def actualizar_libro(id: int, datos_actualizados: LibroActualizar):
     libro_existente = buscar_libro_por_id(id)
@@ -144,7 +136,7 @@ def actualizar_libro(id: int, datos_actualizados: LibroActualizar):
     return libro_existente
 
 
-# 5) DELETE /libros/{id}
+# DELETE /libros/{id}
 @app.delete("/libros/{id}")
 def eliminar_libro(id: int):
     libro_existente = buscar_libro_por_id(id)
@@ -152,7 +144,7 @@ def eliminar_libro(id: int):
     return {"mensaje": "Libro eliminado correctamente"}
 
 
-# 6) POST /libros/{id}/prestar
+# POST /libros/{id}/prestar
 @app.post("/libros/{id}/prestar", response_model=Libro)
 def prestar_libro(id: int):
     libro = buscar_libro_por_id(id)
@@ -167,7 +159,7 @@ def prestar_libro(id: int):
     return libro
 
 
-# 7) ENDPOINT OBLIGATORIO EXTRA: LEYENDO
+# 7) ENDPOINT: LEYENDO
 @app.post("/leyendo", response_model=LeyendoRespuesta, status_code=201)
 def registrar_leyendo(data: LeyendoEntrada):
     libros_encontrados: List[Libro] = []
